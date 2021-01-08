@@ -3,12 +3,6 @@
 
 #include "MyPlayerController.h"
 
-
-ATank* AMyPlayerController::GetControlledTank() const
-{
-	return Cast<ATank> (GetPawn());
-}
-
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,3 +15,22 @@ void AMyPlayerController::BeginPlay()
 
 	}
 }
+
+void AMyPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+void AMyPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+}
+
+
+ATank* AMyPlayerController::GetControlledTank() const
+{
+	return Cast<ATank> (GetPawn());
+}
+
+
