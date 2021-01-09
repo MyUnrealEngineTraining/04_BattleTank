@@ -3,6 +3,14 @@
 
 #include "MyAIController.h"
 
+void AMyAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (GetPlayerTank())
+	{
+		GetControlled()->AimAt(GetPlayerTank()->GetActorLocation());
+	}
+}
 ATank *AMyAIController::GetControlled() const
 {
 	return Cast<ATank>(GetPawn());
