@@ -10,9 +10,9 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
 
-void ATank::SetTurretReference(UTankTurret* TankTurret)
+void ATank::SetTurretReference(UTankTurret* TurretToSet)
 {
-	TankAimingComponent->SetTurretReference(TankTurret);	
+	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
 // Sets default values
@@ -42,4 +42,10 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATank::AimAt(FVector HitLocation) 
 {
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+}
+
+void ATank::Fire()
+{
+	auto Time = GetWorld()->GetDeltaSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("test fire in %f"), Time)
 }
