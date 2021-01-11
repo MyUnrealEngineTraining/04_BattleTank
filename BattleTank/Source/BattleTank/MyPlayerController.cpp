@@ -2,6 +2,7 @@
 
 
 #include "MyPlayerController.h"
+#include "Tank.h"
 
 void AMyPlayerController::BeginPlay()
 {
@@ -41,7 +42,7 @@ bool AMyPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
-		UE_LOG(LogTemp, Warning, TEXT("Deproject: %s"), *LookDirection.ToString()); 
+		//UE_LOG(LogTemp, Warning, TEXT("Deproject: %s"), *LookDirection.ToString()); 
 		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 //	DrawDebugLine(

@@ -3,11 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
-#include "DrawDebugHelpers.h"
 #include "MyPlayerController.generated.h"
 
+class ATank;
 /**
  * 
  */
