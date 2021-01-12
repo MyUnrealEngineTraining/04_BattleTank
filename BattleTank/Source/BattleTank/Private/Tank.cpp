@@ -59,6 +59,10 @@ void ATank::Fire()
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile"))
 			);
+		if (!Projectile) {
+			UE_LOG(LogTemp, Warning, TEXT("SpawnActor recive null point a Projectile"));
+			return;
+		}
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}

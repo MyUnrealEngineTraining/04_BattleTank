@@ -13,7 +13,6 @@ void AMyAIController::Tick(float DeltaTime)
 	if (PlayerTank)
 	{
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
-
 		ControlledTank->Fire();
 	}
 }
