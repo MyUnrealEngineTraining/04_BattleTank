@@ -15,6 +15,10 @@ class BATTLETANK_API AMyAIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditAnywhere, Category=AI)
+	float AcceptanceRadius = 3000;
+
 private:
 
 	virtual void Tick(float) override;
