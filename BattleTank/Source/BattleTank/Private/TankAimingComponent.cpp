@@ -56,7 +56,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("test %s"), *AimDirection.ToString())
-
+	if (!Barrel || !Turret) { return; }
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
