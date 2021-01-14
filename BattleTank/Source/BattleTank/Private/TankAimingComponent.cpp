@@ -67,13 +67,12 @@ void UTankAimingComponent::Fire()
 
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSecond;
 	//UE_LOG(LogTemp, Warning, TEXT("fire call"));
-	if (!ensure(Barrel)) { return; }
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 	if (isReloaded)
 	{
 
 		FVector locate = Barrel->GetSocketLocation(FName("Projectile"));
 		FRotator rotate = Barrel->GetSocketRotation(FName("Projectile"));
-		UE_LOG(LogTemp, Warning, TEXT("fire call %s %s"), *locate.ToString(), *rotate.ToString());
 		AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, locate, rotate);
 		if (!ensure(Projectile)) {
 			UE_LOG(LogTemp, Warning, TEXT("SpawnActor recive null point a Projectile"));
