@@ -10,7 +10,7 @@
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	ATank* tank = GetControlledTank();
+	ATank* tank = Cast<ATank>(GetPawn());
 	if (ensure(tank)) {
 		UE_LOG(LogTemp, Warning, TEXT("Player controller possessing %s"), *tank->GetName());
 	} else {
@@ -18,9 +18,9 @@ void AMyPlayerController::BeginPlay()
 		return;
 
 	}
-	auto AimingComponent = tank->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(AimingComponent)) {
-		FoundAimingComponent(AimingComponent);
+	TankAimingComponent = tank->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(TankAimingComponent)) {
+		FoundAimingComponent(TankAimingComponent);
 	}
 }
 
@@ -37,7 +37,7 @@ void AMyPlayerController::AimTowardsCrosshair()
 	FVector HitLocation = FVector(0);
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		TankAimingComponent->AimAt(HitLocation);
 	}
 
 }
@@ -88,7 +88,6 @@ bool AMyPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& Lo
 	FVector CameraWorldLocation;
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection);
 }
-
 
 ATank* AMyPlayerController::GetControlledTank() const
 {

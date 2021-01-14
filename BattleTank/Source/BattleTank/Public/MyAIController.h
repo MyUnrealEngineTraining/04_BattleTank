@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "TankAimingComponent.h"
 #include "MyAIController.generated.h"
 
 class ATank;
@@ -20,6 +21,8 @@ public:
 
 private:
 
+
+	UTankAimingComponent* TankAimingComponent = nullptr;
 	virtual void Tick(float) override;
 	
 };

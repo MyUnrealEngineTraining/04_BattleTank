@@ -24,6 +24,8 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
 	
 public:
 
