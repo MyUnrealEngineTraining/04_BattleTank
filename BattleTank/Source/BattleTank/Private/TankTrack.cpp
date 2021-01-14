@@ -13,3 +13,13 @@ void UTankTrack::SetThrottle(float Throttle)
 	//auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
+
+UTankTrack::UTankTrack()
+{
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Track ticking"));
+}

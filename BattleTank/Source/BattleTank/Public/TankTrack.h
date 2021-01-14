@@ -10,10 +10,14 @@
  * 
  */
 UCLASS(meta=(BlueprintSpawnableComponent))
-//UCLASS()
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
+
+private:
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UTankTrack();
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Input")

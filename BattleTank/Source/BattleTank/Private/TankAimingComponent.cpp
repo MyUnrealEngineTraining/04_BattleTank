@@ -6,6 +6,27 @@
 #include "TankTurret.h"
 #include "Projectile.h"
 
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+
+	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSecond)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	else if (IsBarrelMoving()){
+		FiringState = EFiringState::Aiming;
+	}
+	else {
+		FiringState = EFiringState::Locked;
+	}
+
+}
+
+void UTankAimingComponent::BeginPlay()
+{
+	LastFireTime = FPlatformTime::Seconds();
+}
+
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
@@ -38,8 +59,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	);
 	if( bHaveAimSolution)
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
+		MoveBarrelTowards();
 	}
 }
 
@@ -49,7 +70,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveBarrelTowards()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("test %s"), *AimDirection.ToString())
 	if (!ensure(Barrel && Turret)) { return; }
@@ -62,14 +83,21 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	
 }
 
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	//FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")->GetForwardVector());
+	FVector BarrelForward = Barrel->GetForwardVector();
+	return !BarrelForward.Equals(AimDirection, 0.01);
+}
+
 void UTankAimingComponent::Fire()
 {
-
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSecond;
-	//UE_LOG(LogTemp, Warning, TEXT("fire call"));
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
-	if (isReloaded)
+
+	if (FiringState != EFiringState::Reloading)
 	{
+		if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
 		FVector locate = Barrel->GetSocketLocation(FName("Projectile"));
 		FRotator rotate = Barrel->GetSocketRotation(FName("Projectile"));
@@ -84,4 +112,7 @@ void UTankAimingComponent::Fire()
 
 
 
-}
+}	
+
+
+//UE_LOG(LogTemp, Warning, TEXT("fire call"));

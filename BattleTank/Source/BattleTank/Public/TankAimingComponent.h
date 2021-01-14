@@ -24,6 +24,10 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	virtual void BeginPlay() override;
+
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
@@ -43,7 +47,14 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
-	void MoveBarrelTowards(FVector AimDirection);
+	void MoveBarrelTowards();
+
+
+	FVector AimDirection;
+
+	bool IsBarrelMoving();
+
+
 		
 protected:
 	UPROPERTY(EditAnywhere, Category = "Firing")
