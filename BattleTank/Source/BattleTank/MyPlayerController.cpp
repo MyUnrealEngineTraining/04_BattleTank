@@ -2,18 +2,25 @@
 
 
 #include "MyPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
+
+
 
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	ATank* tank = GetControlledTank();
-	if (tank != nullptr) {
+	if (ensure(tank)) {
 		UE_LOG(LogTemp, Warning, TEXT("Player controller possessing %s"), *tank->GetName());
 	} else {
 		UE_LOG(LogTemp, Warning, TEXT("Player controller no possessing "));
 		return;
 
+	}
+	auto AimingComponent = tank->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent)) {
+		FoundAimingComponent(AimingComponent);
 	}
 }
 
@@ -25,7 +32,7 @@ void AMyPlayerController::Tick(float DeltaTime)
 
 void AMyPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 	
 	FVector HitLocation = FVector(0);
 	if (GetSightRayHitLocation(HitLocation))
