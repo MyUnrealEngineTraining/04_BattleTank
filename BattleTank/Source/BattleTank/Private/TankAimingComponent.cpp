@@ -80,7 +80,9 @@ void UTankAimingComponent::MoveBarrelTowards()
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+	auto DegreesRotate = (DeltaRotator.Yaw > -180.0 && DeltaRotator.Yaw < 180.0) ? DeltaRotator.Yaw : -(DeltaRotator.Yaw / abs(DeltaRotator.Yaw)) * (360.0 - DeltaRotator.Yaw);
+	//UE_LOG(LogTemp, Warning, TEXT("orig %f, change %f"), DeltaRotator.Yaw, DegreesRotate)
+	Turret->Rotate(DegreesRotate);
 	
 	
 }

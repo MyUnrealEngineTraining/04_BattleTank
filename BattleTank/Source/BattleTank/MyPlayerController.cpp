@@ -37,7 +37,9 @@ void AMyPlayerController::AimTowardsCrosshair()
 	if (!TankAimingComponent) { return; }
 	
 	FVector HitLocation = FVector(0);
-	if (GetSightRayHitLocation(HitLocation))
+	bool bResult = GetSightRayHitLocation(HitLocation);
+	UE_LOG(LogTemp, Warning, TEXT("%i"), bResult);
+	if (bResult)
 	{
 		TankAimingComponent->AimAt(HitLocation);
 	}
@@ -51,7 +53,7 @@ bool AMyPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
-		GetLookVectorHitLocation(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 //	DrawDebugLine(
 //		GetWorld(),
@@ -63,7 +65,7 @@ bool AMyPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 //		0.0f,
 //		10.0f
 //	);
-	return true;
+	return false;
 }
 
 bool AMyPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
