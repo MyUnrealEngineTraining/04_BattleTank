@@ -78,7 +78,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float TowardTurnAccuracy = 0.01;
 
-	UPROPERTY(EditAnywhere, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 CountAmmo = 3;
 
 };
