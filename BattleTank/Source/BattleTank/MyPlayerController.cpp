@@ -18,6 +18,7 @@ void AMyPlayerController::BeginPlay()
 		return;
 
 	}
+	// TODO check TankAimingComponent init 
 	TankAimingComponent = tank->FindComponentByClass<UTankAimingComponent>();
 	if (ensure(TankAimingComponent)) {
 		FoundAimingComponent(TankAimingComponent);
@@ -32,7 +33,8 @@ void AMyPlayerController::Tick(float DeltaTime)
 
 void AMyPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) { return; }
+	if (!GetPawn()) { return; }
+	if (!TankAimingComponent) { return; }
 	
 	FVector HitLocation = FVector(0);
 	if (GetSightRayHitLocation(HitLocation))
@@ -49,7 +51,6 @@ bool AMyPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
-		//UE_LOG(LogTemp, Warning, TEXT("Deproject: %s"), *LookDirection.ToString()); 
 		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 //	DrawDebugLine(
