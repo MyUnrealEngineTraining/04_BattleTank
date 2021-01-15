@@ -10,16 +10,22 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSecond)
-	{
-		FiringState = EFiringState::Reloading;
-	}
-	else if (IsBarrelMoving()){
-		FiringState = EFiringState::Aiming;
+	if (CurrentAmmo > 0) {
+		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSecond)
+		{
+			FiringState = EFiringState::Reloading;
+		}
+		else if (IsBarrelMoving()){
+			FiringState = EFiringState::Aiming;
+		}
+		else {
+			FiringState = EFiringState::Locked;
+		}
 	}
 	else {
-		FiringState = EFiringState::Locked;
+		FiringState = EFiringState::Empty;
 	}
+
 
 }
 
@@ -35,6 +41,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+	CurrentAmmo = CountAmmo;
 
 	// ...
 }
@@ -92,14 +99,14 @@ bool UTankAimingComponent::IsBarrelMoving()
 	if (!ensure(Barrel)) { return false; }
 	//FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")->GetForwardVector());
 	FVector BarrelForward = Barrel->GetForwardVector();
-	return !BarrelForward.Equals(AimDirection, 0.01);
+	return !BarrelForward.Equals(AimDirection, TowardTurnAccuracy);
 }
 
 void UTankAimingComponent::Fire()
 {
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 		if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
@@ -112,11 +119,16 @@ void UTankAimingComponent::Fire()
 		}
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		CurrentAmmo--;
 	}
 
 
 
 }	
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
 
 //UE_LOG(LogTemp, Warning, TEXT("fire call"));

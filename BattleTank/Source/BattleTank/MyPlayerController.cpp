@@ -38,7 +38,7 @@ void AMyPlayerController::AimTowardsCrosshair()
 	
 	FVector HitLocation = FVector(0);
 	bool bResult = GetSightRayHitLocation(HitLocation);
-	UE_LOG(LogTemp, Warning, TEXT("%i"), bResult);
+	//UE_LOG(LogTemp, Warning, TEXT("%i"), bResult);
 	if (bResult)
 	{
 		TankAimingComponent->AimAt(HitLocation);

@@ -16,7 +16,8 @@ UENUM()
 enum class EFiringState : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	Empty
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -43,6 +44,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
+	EFiringState GetFiringState() const;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+	int32 CurrentAmmo;
+
+
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -68,5 +75,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float TowardTurnAccuracy = 0.01;
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	int32 CountAmmo = 3;
 
 };
