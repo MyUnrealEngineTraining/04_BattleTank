@@ -8,6 +8,9 @@
 #include "MyAIController.generated.h"
 
 class ATank;
+
+
+
 /**
  * 
  */
@@ -20,11 +23,18 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float AcceptanceRadius = 3000;
 
+
+
 private:
 
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 	virtual void Tick(float) override;
+
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPossedTankDeath();
 	
 };
 
