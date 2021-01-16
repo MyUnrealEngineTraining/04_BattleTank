@@ -78,7 +78,7 @@ bool AMyPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVecto
 		HitResult,
 		StartLocation,
 		EndLocation,
-		ECollisionChannel::ECC_Visibility))
+		ECollisionChannel::ECC_Camera)) // so that lookvectorhit not got hit healthbar
 	{
 		HitLocation = HitResult.Location;
 		return true;
