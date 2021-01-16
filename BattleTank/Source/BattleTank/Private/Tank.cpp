@@ -14,6 +14,8 @@ ATank::ATank()
 	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
+
+
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstagator, AActor* DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
@@ -38,5 +40,10 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrenHealth / (float)StartingHealth;
 }
 
