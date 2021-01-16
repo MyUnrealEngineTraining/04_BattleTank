@@ -26,6 +26,12 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
+private:
+	UFUNCTION()
+	void StartSoectatingOnly();
+
+	virtual void SetPawn(APawn* InPawn) override;
+
 	
 public:
 

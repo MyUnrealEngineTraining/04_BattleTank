@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "MyAIController.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 
 
 void AMyAIController::Tick(float DeltaTime)
@@ -34,5 +35,9 @@ void AMyAIController::SetPawn(APawn* InPawn)
 
 void AMyAIController::OnPossedTankDeath()
 {
+	if (!ensure(GetPawn())) {
+
+	}
 	UE_LOG(LogTemp, Warning, TEXT("Tank died DELEGATE"));
+	GetPawn()->DetachFromControllerPendingDestroy();
 }

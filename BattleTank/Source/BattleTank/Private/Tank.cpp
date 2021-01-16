@@ -35,6 +35,7 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, ACo
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+	CurrenHealth = StartingHealth;
 }
 
 // Called to bind functionality to input

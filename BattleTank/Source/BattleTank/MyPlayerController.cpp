@@ -7,6 +7,7 @@
 
 
 
+
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -97,4 +98,18 @@ ATank* AMyPlayerController::GetControlledTank() const
 	return Cast<ATank> (GetPawn());
 }
 
+void AMyPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &AMyPlayerController::StartSoectatingOnly);
+	}
+}
 
+void AMyPlayerController::StartSoectatingOnly()
+{
+	StartSpectatingOnly();
+	//UE_LOG(LogTemp, Warning, TEXT("Player Tank died DELEGATE"));
+}
