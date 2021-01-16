@@ -14,6 +14,20 @@ ATank::ATank()
 	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstagator, AActor* DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	int32 DamageToApply = FMath::Clamp(DamagePoints, 0, CurrenHealth);
+	CurrenHealth -= DamageToApply;
+	if (CurrenHealth <= 0) {
+		UE_LOG(LogTemp, Warning, TEXT("Tank died"));
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("CurrenHealth %i and DamateToApplay %i"), CurrenHealth, DamageToApply)
+	}
+	return DamageToApply;
+}
+
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
