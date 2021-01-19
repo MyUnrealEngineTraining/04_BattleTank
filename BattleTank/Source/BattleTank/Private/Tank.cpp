@@ -9,7 +9,7 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
+	bDead = false;
 	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming component"));
 	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
@@ -34,6 +34,7 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, ACo
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
+	UE_LOG(LogTemp, Warning, TEXT("bDead = %i"), bDead);
 	Super::BeginPlay();
 	CurrenHealth = StartingHealth;
 }

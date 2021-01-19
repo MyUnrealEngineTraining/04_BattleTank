@@ -8,19 +8,19 @@ void AMyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-	auto ControlledTank = GetPawn();
+	//auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	//auto ControlledTank = GetPawn();
 
-	if (!(PlayerTank && ControlledTank)) { return; }
+	//if (!(PlayerTank && ControlledTank)) { return; }
 
-	MoveToActor(PlayerTank, AcceptanceRadius);
+	//MoveToActor(PlayerTank, AcceptanceRadius);
 
-	TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
-	if (TankAimingComponent->GetFiringState() == EFiringState::Locked) 
-	{
-		TankAimingComponent->Fire();
-	}
+	//TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	//TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
+	//if (TankAimingComponent->GetFiringState() == EFiringState::Locked) 
+	//{
+	//	TankAimingComponent->Fire();
+	//}
 }
 
 void AMyAIController::SetPawn(APawn* InPawn)

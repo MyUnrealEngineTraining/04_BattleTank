@@ -38,6 +38,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrenHealth = 0;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	bool bDead;
+
 
 
 
